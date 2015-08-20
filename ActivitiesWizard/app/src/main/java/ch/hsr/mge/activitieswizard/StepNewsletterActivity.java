@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
 
-public class StepNewsletterActivity extends AppCompatActivity {
+public class StepNewsletterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private UserRegistrationData data;
 
@@ -20,16 +20,18 @@ public class StepNewsletterActivity extends AppCompatActivity {
 
         TextView question = (TextView) findViewById(R.id.newsletterTextView);
         question.setText(data.getName() + ", möchten Sie unseren Newsletter abonnieren?");
+
+        findViewById(R.id.nextButton).setOnClickListener(this);
     }
 
-    public void onNext(View view) {
+    public void onClick(View view) {
         Switch newsletter = (Switch) findViewById(R.id.newsletterSwitch);
         boolean wantsNewsletter = newsletter.isChecked();
         data.setNewsletter(wantsNewsletter);
 
         Intent intent;
         if (wantsNewsletter) {
-            intent = new Intent(this, StepThanksActivity.class);
+            intent = new Intent(this, StepSubscribedActivity.class);
         } else {
             intent = new Intent(this, StepDoneActivity.class);
         }

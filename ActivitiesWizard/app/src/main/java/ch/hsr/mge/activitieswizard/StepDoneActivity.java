@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-public class StepDoneActivity extends AppCompatActivity {
+public class StepDoneActivity extends AppCompatActivity implements View.OnClickListener{
 
     private UserRegistrationData data;
 
@@ -16,8 +16,9 @@ public class StepDoneActivity extends AppCompatActivity {
         setContentView(R.layout.activity_step_done);
         data = (UserRegistrationData) getIntent().getSerializableExtra(Constants.REGISTRATION_DATA);
 
-        TextView thanks = (TextView) findViewById(R.id.thanksTextView);
+        findViewById(R.id.nextButton).setOnClickListener(this);
 
+        TextView thanks = (TextView) findViewById(R.id.thanksTextView);
         String text;
         if(data.isNewsletter()) {
             text = "Sie sind angemeldet, " + data.getName() + ", und werden unseren Newsletter bald erhalten!";
@@ -27,7 +28,7 @@ public class StepDoneActivity extends AppCompatActivity {
         thanks.setText(text);
     }
 
-    public void onMore(View view) {
+    public void onClick(View view) {
         Intent intent = new Intent(this, StepNameActivity.class);
         intent.putExtra(Constants.REGISTRATION_DATA, new UserRegistrationData());
         startActivity(intent);

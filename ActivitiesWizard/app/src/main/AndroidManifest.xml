@@ -25,7 +25,7 @@
             android:label="@string/title_activity_step_newsletter" >
         </activity>
         <activity
-            android:name=".StepThanksActivity"
+            android:name=".StepSubscribedActivity"
             android:label="@string/title_activity_step_thanks" >
         </activity>
         <activity
