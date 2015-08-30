@@ -6,7 +6,7 @@ public class Note extends Observable {
 
     private String title;
     private String content;
-
+    // Constructor, Getters and Setters
     public Note(String title, String content) {
         this.title = title;
         this.content = content;
@@ -28,7 +28,5 @@ public class Note extends Observable {
 
     public void setContent(String content) {
         this.content = content;
-        setChanged();
-        notifyObservers();
     }
 }

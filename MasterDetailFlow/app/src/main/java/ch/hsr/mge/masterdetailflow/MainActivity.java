@@ -10,7 +10,7 @@ import java.util.Observer;
 
 import ch.hsr.mge.masterdetailflow.domain.Note;
 
-public class MainActivity extends AppCompatActivity implements NotesListFragment.OnItemSelection, Observer {
+public class MainActivity extends AppCompatActivity implements ItemSelectionListener, Observer {
 
     private boolean isTwoPaneMode;
     private int currentlyObserving = -1;
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NotesListFragment
                     .commit();
 
         } else {
-            Intent detailIntent = new Intent(this, NoteDetailActivity.class);
+            Intent detailIntent = new Intent(this, DetailActivity.class);
             detailIntent.putExtra(NoteDetailFragment.ARG_ITEM, position);
             startActivity(detailIntent);
         }

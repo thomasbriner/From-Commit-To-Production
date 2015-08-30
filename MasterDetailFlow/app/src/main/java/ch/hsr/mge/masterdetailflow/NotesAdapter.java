@@ -26,11 +26,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
     private Notes notes;
-    private NotesListFragment.OnItemSelection itemSelectionCallback;
+    private ItemSelectionListener selectionListener;
 
-    public NotesAdapter(Notes notes, NotesListFragment.OnItemSelection itemSelectionCallback) {
+    public NotesAdapter(Notes notes, ItemSelectionListener selectionListener) {
         this.notes = notes;
-        this.itemSelectionCallback = itemSelectionCallback;
+        this.selectionListener = selectionListener;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemSelectionCallback.onItemSelected(position);
+                selectionListener.onItemSelected(position);
             }
         });
     }
@@ -74,6 +74,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     @Override
     public void update(Observable observable, Object data) {
         Note changedNote = (Note) observable;
-        notifyItemChanged(notes.getPosition(changedNote));
+        int positionToUpdate = notes.getPosition(changedNote);
+        notifyItemChanged(positionToUpdate);
     }
 }

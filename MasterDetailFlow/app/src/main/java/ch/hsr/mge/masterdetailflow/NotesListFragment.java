@@ -11,14 +11,10 @@ import android.view.ViewGroup;
 
 public class NotesListFragment extends Fragment {
 
-    private OnItemSelection itemSelectionCallback = null;
+    private ItemSelectionListener itemSelectionCallback = null;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private NotesAdapter adapter;
-
-    public interface OnItemSelection {
-        void onItemSelected(int position);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,11 +41,11 @@ public class NotesListFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if (!(activity instanceof OnItemSelection)) {
+        if (!(activity instanceof ItemSelectionListener)) {
             throw new IllegalStateException("Activity must implement OnItemSelection");
         }
 
-        itemSelectionCallback = (OnItemSelection) activity;
+        itemSelectionCallback = (ItemSelectionListener) activity;
     }
 
     @Override
