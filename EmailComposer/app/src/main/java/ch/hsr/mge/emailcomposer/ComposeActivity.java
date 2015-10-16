@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class ComposeActivity extends AppCompatActivity {
 
     private EditText fromEditText;
     private EditText toEditText;
@@ -18,12 +18,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_send_email);
 
         fromEditText = (EditText) findViewById(R.id.fromEditText);
         toEditText = (EditText) findViewById(R.id.toEditText);
         subjectEditText = (EditText) findViewById(R.id.subjectEditText);
         messageEditText = (EditText) findViewById(R.id.messageTextView);
+
+        String sender = getIntent().getStringExtra(Intent.EXTRA_EMAIL);
+        fromEditText.setText(sender);
 
         Button sendButton = (Button) findViewById(R.id.sendButton);
         sendButton.setOnClickListener(new View.OnClickListener() {
