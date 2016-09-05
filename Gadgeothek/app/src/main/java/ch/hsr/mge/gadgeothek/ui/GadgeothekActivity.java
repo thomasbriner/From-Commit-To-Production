@@ -27,8 +27,6 @@ import ch.hsr.mge.gadgeothek.ui.reservations.ReservationsFragment;
 
 public class GadgeothekActivity extends AppCompatActivity {
 
-    LibraryService service = new LibraryService();
-
     private static final String ACTIVE_TAB = GadgeothekActivity.class.getCanonicalName() + ".ACTIVE_TAB";
     private Toolbar toolbar;
     private FloatingActionButton fab;

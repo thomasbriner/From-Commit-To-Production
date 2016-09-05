@@ -1,9 +1,7 @@
 package ch.hsr.mge.gadgeothek.ui.reservations;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -25,14 +23,7 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable {
     }
 
     public CheckableLinearLayout(final Context context, final AttributeSet attrs) {
-        super(context, attrs);
-        setClickable(true);
-        setLongClickable(true);
-    }
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public CheckableLinearLayout(final Context context, final AttributeSet attrs, final int defStyle) {
-        super(context, attrs, defStyle);
+        super(context, attrs, 0);
         setClickable(true);
         setLongClickable(true);
     }

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.util.Pair;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.Response;
@@ -39,7 +40,8 @@ class Request<T> extends AsyncTask<Void, Void, Pair<String, T>> {
         Log.d(TAG, "Requesting " + url);
         AsyncHttpClient c = new AsyncHttpClient();
         String responseBody = "";
-        Gson gson = LibraryService.createGsonObject();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+
         try {
 
             AsyncHttpClient.BoundRequestBuilder request = null;
@@ -78,7 +80,7 @@ class Request<T> extends AsyncTask<Void, Void, Pair<String, T>> {
             String message = e.getMessage();
             try {
                 message = gson.fromJson(responseBody, String.class);
-            } catch (JsonParseException _) {
+            } catch (JsonParseException e1) {
             }
             return new Pair<>(message, null);
         } catch (ConnectException e) {
