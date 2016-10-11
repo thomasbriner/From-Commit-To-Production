@@ -27,10 +27,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:design:23.+'
     compile 'com.google.code.gson:gson:2.4'
-    compile 'com.ning:async-http-client:1.9.31'
-    compile 'io.netty:netty:3.10.5.Final'
-    compile 'org.slf4j:slf4j-api:1.7.12'
-    compile 'org.slf4j:slf4j-simple:1.7.12'
-    compile 'com.google.android.gms:play-services:9.4.0'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 }

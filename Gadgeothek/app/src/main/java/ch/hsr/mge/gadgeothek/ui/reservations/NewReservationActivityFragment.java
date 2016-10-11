@@ -43,6 +43,11 @@ public class NewReservationActivityFragment extends Fragment implements NewReser
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         layout = inflater.inflate(R.layout.new_reservation_fragment, container, false);

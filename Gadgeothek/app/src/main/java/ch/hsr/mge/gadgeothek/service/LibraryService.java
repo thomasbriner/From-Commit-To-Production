@@ -2,8 +2,6 @@ package ch.hsr.mge.gadgeothek.service;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ public class LibraryService {
         HashMap<String, String> parameter = new HashMap<>();
         parameter.put("email", mail);
         parameter.put("password", password);
-        Request<LoginToken> request = new Request<>(HttpVerb.POST, serverUrl + "/login", LoginToken.class, parameter, new Callback<LoginToken>() {
+        Request<LoginToken> request = new Request<>(HttpVerb.POST, serverUrl + "/login", LoginToken.class, null, parameter, new Callback<LoginToken>() {
             @Override
             public void onCompletion(LoginToken input) {
                 token = input;
@@ -49,10 +47,9 @@ public class LibraryService {
     }
 
     public static void logout(final Callback<Boolean> callback) {
-        HashMap<String, String> parameter = new HashMap<>();
-        parameter.put("token", getTokenAsString());
+        HashMap<String, String> headers = getAuthHeaders();
 
-        Request<Boolean> request = new Request<>(HttpVerb.POST, serverUrl + "/logout", Boolean.class, parameter, new Callback<Boolean>() {
+        Request<Boolean> request = new Request<>(HttpVerb.POST, serverUrl + "/logout", Boolean.class, headers, null, new Callback<Boolean>() {
             @Override
             public void onCompletion(Boolean input) {
                 if (input) {
@@ -77,7 +74,7 @@ public class LibraryService {
         parameter.put("name", name);
         parameter.put("studentnumber", studentenNumber);
 
-        Request<Boolean> request = new Request<>(HttpVerb.POST, serverUrl + "/register", Boolean.class, parameter, new Callback<Boolean>() {
+        Request<Boolean> request = new Request<>(HttpVerb.POST, serverUrl + "/register", Boolean.class, null, parameter, new Callback<Boolean>() {
             @Override
             public void onCompletion(Boolean input) {
                 callback.onCompletion(input);
@@ -96,11 +93,10 @@ public class LibraryService {
         if (token == null) {
             throw new IllegalStateException("Not logged in");
         }
-        HashMap<String, String> parameter = new HashMap<>();
+        HashMap<String, String> headers = getAuthHeaders();
 
-        parameter.put("token", getTokenAsString());
         Request<List<Loan>> request = new Request<>(HttpVerb.GET, serverUrl + "/loans", new TypeToken<List<Loan>>() {
-        }.getType(), parameter, new Callback<List<Loan>>() {
+        }.getType(), headers, null, new Callback<List<Loan>>() {
             @Override
             public void onCompletion(List<Loan> input) {
                 callback.onCompletion(input == null ? new ArrayList<Loan>() : input);
@@ -118,11 +114,10 @@ public class LibraryService {
         if (token == null) {
             throw new IllegalStateException("Not logged in");
         }
-        HashMap<String, String> parameter = new HashMap<>();
-        parameter.put("token", getTokenAsString());
+        HashMap<String, String> headers = getAuthHeaders();
 
         Request<List<Reservation>> request = new Request<>(HttpVerb.GET, serverUrl + "/reservations", new TypeToken<List<Reservation>>() {
-        }.getType(), parameter, new Callback<List<Reservation>>() {
+        }.getType(), headers, null, new Callback<List<Reservation>>() {
             @Override
             public void onCompletion(List<Reservation> input) {
                 callback.onCompletion(input == null ? new ArrayList<Reservation>() : input);
@@ -141,12 +136,13 @@ public class LibraryService {
         if (token == null) {
             throw new IllegalStateException("Not logged in");
         }
+        HashMap<String, String> headers = getAuthHeaders();
+
         HashMap<String, String> parameter = new HashMap<>();
-        parameter.put("token", getTokenAsString());
         parameter.put("gadgetId", toReserve.getInventoryNumber());
 
         Request<Boolean> request = new Request<>(HttpVerb.POST, serverUrl + "/reservations", new TypeToken<Boolean>() {
-        }.getType(), parameter, new Callback<Boolean>() {
+        }.getType(), headers, parameter, new Callback<Boolean>() {
             @Override
             public void onCompletion(Boolean success) {
                 callback.onCompletion(success);
@@ -165,10 +161,12 @@ public class LibraryService {
         if (token == null) {
             throw new IllegalStateException("Not logged in");
         }
+        HashMap<String, String> headers = getAuthHeaders();
+
         HashMap<String, String> parameter = new HashMap<>();
-        parameter.put("token", getTokenAsString());
         parameter.put("id", toDelete.getReservationId());
-        Request<Boolean> request = new Request<>(HttpVerb.DELETE, serverUrl + "/reservations", Boolean.class, parameter, new Callback<Boolean>() {
+
+        Request<Boolean> request = new Request<>(HttpVerb.DELETE, serverUrl + "/reservations", Boolean.class, headers, parameter, new Callback<Boolean>() {
             @Override
             public void onCompletion(Boolean input) {
                 callback.onCompletion(input);
@@ -186,11 +184,10 @@ public class LibraryService {
         if (token == null) {
             throw new IllegalStateException("Not logged in");
         }
-        HashMap<String, String> parameter = new HashMap<>();
+        HashMap<String, String> headers = getAuthHeaders();
 
-        parameter.put("token", getTokenAsString());
         Request<List<Gadget>> request = new Request<>(HttpVerb.GET, serverUrl + "/gadgets", new TypeToken<List<Gadget>>() {
-        }.getType(), parameter, new Callback<List<Gadget>>() {
+        }.getType(), headers, null, new Callback<List<Gadget>>() {
             @Override
             public void onCompletion(List<Gadget> input) {
                 callback.onCompletion(input);
@@ -204,13 +201,11 @@ public class LibraryService {
         request.execute();
     }
 
-    private static String getTokenAsString() {
-        Gson gson = createGsonObject();
-        return gson.toJson(token);
-    }
-
-    static Gson createGsonObject() {
-        return new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+    private static HashMap<String, String> getAuthHeaders() {
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("x-security-token", token.getSecurityToken());
+        headers.put("x-customer-id", token.getCustomerId());
+        return headers;
     }
 }
 
