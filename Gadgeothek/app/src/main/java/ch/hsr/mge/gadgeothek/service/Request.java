@@ -39,10 +39,6 @@ class Request<T> extends AsyncTask<Void, Void, Pair<String, T>> {
     }
 
     protected Pair<String, T> doInBackground(Void... unused) {
-        return getData(url, resultType);
-    }
-
-    private Pair<String, T> getData(String url, Type type) {
         Log.d(TAG, "Requesting " + url);
 
         OkHttpClient client = new OkHttpClient();
@@ -83,7 +79,7 @@ class Request<T> extends AsyncTask<Void, Void, Pair<String, T>> {
             Log.d(this.getClass().getSimpleName(), "Response received: " + responseBody);
 
             //noinspection unchecked
-            return new Pair<>(null, (T) gson.fromJson(responseBody, type));
+            return new Pair<>(null, (T) gson.fromJson(responseBody, resultType));
 
         } catch (JsonParseException e) {
             String message = e.getMessage();

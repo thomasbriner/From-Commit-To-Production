@@ -12,8 +12,12 @@ import ch.hsr.mge.gadgeothek.domain.Gadget;
 import ch.hsr.mge.gadgeothek.domain.Loan;
 import ch.hsr.mge.gadgeothek.domain.Reservation;
 
+/**
+ * Diese Klasse soll kein Vorbild für eine echte Service-Implementierung sein sondern ein Kompromiss,
+ * da wir die echten Android-Services erst später im Verlauf des Moduls kennenlernen werden.
+ */
 public class LibraryService {
-    
+
     private static final String TAG = LibraryService.class.getSimpleName();
     private static LoginToken token;
     private static String serverUrl;
@@ -28,6 +32,7 @@ public class LibraryService {
     }
 
     public static void login(String mail, String password, final Callback<Boolean> callback) {
+        checkServerUrlSet();
         HashMap<String, String> parameter = new HashMap<>();
         parameter.put("email", mail);
         parameter.put("password", password);
@@ -47,6 +52,7 @@ public class LibraryService {
     }
 
     public static void logout(final Callback<Boolean> callback) {
+        checkServerUrlSet();
         HashMap<String, String> headers = getAuthHeaders();
 
         Request<Boolean> request = new Request<>(HttpVerb.POST, serverUrl + "/logout", Boolean.class, headers, null, new Callback<Boolean>() {
@@ -68,6 +74,7 @@ public class LibraryService {
     }
 
     public static void register(String mail, String password, String name, String studentenNumber, final Callback<Boolean> callback) {
+        checkServerUrlSet();
         HashMap<String, String> parameter = new HashMap<>();
         parameter.put("email", mail);
         parameter.put("password", password);
@@ -90,9 +97,8 @@ public class LibraryService {
 
 
     public static void getLoansForCustomer(final Callback<List<Loan>> callback) {
-        if (token == null) {
-            throw new IllegalStateException("Not logged in");
-        }
+        checkServerUrlSet();
+        checkLoggedIn();
         HashMap<String, String> headers = getAuthHeaders();
 
         Request<List<Loan>> request = new Request<>(HttpVerb.GET, serverUrl + "/loans", new TypeToken<List<Loan>>() {
@@ -111,9 +117,8 @@ public class LibraryService {
     }
 
     public static void getReservationsForCustomer(final Callback<List<Reservation>> callback) {
-        if (token == null) {
-            throw new IllegalStateException("Not logged in");
-        }
+        checkServerUrlSet();
+        checkLoggedIn();
         HashMap<String, String> headers = getAuthHeaders();
 
         Request<List<Reservation>> request = new Request<>(HttpVerb.GET, serverUrl + "/reservations", new TypeToken<List<Reservation>>() {
@@ -133,9 +138,8 @@ public class LibraryService {
 
 
     public static void reserveGadget(Gadget toReserve, final Callback<Boolean> callback) {
-        if (token == null) {
-            throw new IllegalStateException("Not logged in");
-        }
+        checkServerUrlSet();
+        checkLoggedIn();
         HashMap<String, String> headers = getAuthHeaders();
 
         HashMap<String, String> parameter = new HashMap<>();
@@ -158,9 +162,8 @@ public class LibraryService {
 
 
     public static void deleteReservation(Reservation toDelete, final Callback<Boolean> callback) {
-        if (token == null) {
-            throw new IllegalStateException("Not logged in");
-        }
+        checkServerUrlSet();
+        checkLoggedIn();
         HashMap<String, String> headers = getAuthHeaders();
 
         HashMap<String, String> parameter = new HashMap<>();
@@ -181,9 +184,8 @@ public class LibraryService {
     }
 
     public static void getGadgets(final Callback<List<Gadget>> callback) {
-        if (token == null) {
-            throw new IllegalStateException("Not logged in");
-        }
+        checkServerUrlSet();
+        checkLoggedIn();
         HashMap<String, String> headers = getAuthHeaders();
 
         Request<List<Gadget>> request = new Request<>(HttpVerb.GET, serverUrl + "/gadgets", new TypeToken<List<Gadget>>() {
@@ -206,6 +208,18 @@ public class LibraryService {
         headers.put("x-security-token", token.getSecurityToken());
         headers.put("x-customer-id", token.getCustomerId());
         return headers;
+    }
+
+    private static void checkServerUrlSet() {
+        if(serverUrl == null) {
+            throw new IllegalStateException("No server address is set, call setServerAddress before using this method.");
+        }
+    }
+
+    private static void checkLoggedIn() {
+        if (token == null) {
+            throw new IllegalStateException("Not logged in, call login before using this method.");
+        }
     }
 }
 
