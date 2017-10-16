@@ -32,6 +32,9 @@ android {
     dexOptions {
         jumboMode true
     }
+    lintOptions {
+        lintConfig file('../project-specific-lint.xml')
+    }
 }
 
 dependencies {
