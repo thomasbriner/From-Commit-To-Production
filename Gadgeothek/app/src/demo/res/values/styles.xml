@@ -1,0 +1,4 @@
+<resources>
+    <item name="primary" type="color">#4fb53f</item>
+    <item name="primary_dark" type="color">#19430c</item>
+</resources>
