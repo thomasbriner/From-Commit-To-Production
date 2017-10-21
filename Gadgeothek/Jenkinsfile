@@ -1,13 +1,14 @@
 pipeline {
-	agent { 
+	agent {
 		node {
-      		label 'jenkins-slave1.yvu.ch'
+      		label 'jenkins-slave11.yvu.ch'
     	}
 	}
 	stages {
 		stage('Build') {
 			steps {
 				sh 'echo Build'
+				sh 'cd Gadgeothek; ./gradlew build'
 			}
 		}
 
@@ -22,5 +23,12 @@ pipeline {
 		        sh 'echo Package'
 		    }
 		}
+	}
+	post {
+	    always {
+    	    archiveArtifacts '**/outputs/apk/*.apk'
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'Gadgeothek/app/build/reports', reportFiles: 'lint-results.html', reportName: 'Lint Results', reportTitles: ''])
+    	    cleanWs()
+	    }
 	}
 }
