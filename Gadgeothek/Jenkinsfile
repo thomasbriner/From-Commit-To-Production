@@ -25,6 +25,10 @@ pipeline {
 		}
 	}
 	post {
+	    always {
+    	    archiveArtifacts '**/reports/lint*.xml'
+    	    archiveArtifacts '**/reports/lint*.html'
+	    }
 	    success {
     	    archiveArtifacts '**/outputs/apk/*.apk'
 	    }
