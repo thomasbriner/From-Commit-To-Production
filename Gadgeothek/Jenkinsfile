@@ -8,7 +8,7 @@ pipeline {
 		stage('Build') {
 			steps {
 				sh 'echo Build'
-				sh './gradlew build'
+				sh 'Gadgeothek/gradlew build'
 			}
 		}
 
