@@ -26,8 +26,8 @@ pipeline {
 	}
 	post {
 	    always {
-    	    cleanWs()
     	    archiveArtifacts '**/outputs/apk/*.apk'
+    	    cleanWs()
 	    }
 	}
 }
