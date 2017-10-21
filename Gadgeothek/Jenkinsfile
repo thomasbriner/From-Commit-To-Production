@@ -1,0 +1,17 @@
+pipeline {
+    agent {
+        node {
+            label 'jenkins-slave11.yvu.ch'
+        }
+    }
+    stages {
+        stage('Build') {
+            sh 'echo Build'
+        }
+    }
+        stages {
+            stage('E2E Tests') {
+                sh 'echo E2E Tests'
+            }
+        }
+}
