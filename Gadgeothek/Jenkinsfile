@@ -24,12 +24,4 @@ pipeline {
 		    }
 		}
 	}
-	post {
-	    success {
-    	    archiveArtifacts 'Gadgeothek/app/build/outputs/apk/*.apk'
-	    }
-	    always {
-    	    cleanWs()
-	    }
-	}
 }
