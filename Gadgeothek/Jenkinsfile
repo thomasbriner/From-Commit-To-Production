@@ -15,7 +15,6 @@ pipeline {
 		stage('End2End Tests') {
 		    steps {
 		        sh 'echo End2End Tests'
-				sh 'cd Gadgeothek; ./gradlew connectedAndroidTest'
 		    }
 		}
 
