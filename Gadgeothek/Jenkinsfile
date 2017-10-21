@@ -26,8 +26,7 @@ pipeline {
 	}
 	post {
 	    always {
-    	    archiveArtifacts '**/reports/lint*.xml'
-    	    archiveArtifacts '**/reports/lint*.html'
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '**/reports/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
 	    }
 	    success {
     	    archiveArtifacts '**/outputs/apk/*.apk'
