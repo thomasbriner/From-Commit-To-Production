@@ -24,4 +24,9 @@ pipeline {
 		    }
 		}
 	}
+	post {
+	    success {
+    	    archiveArtifacts '**/outputs/apk/*.apk'
+	    }
+	}
 }
