@@ -25,10 +25,9 @@ pipeline {
 		}
 	}
 	post {
-	    success {
-    	    archiveArtifacts '**/outputs/apk/*.apk'
-	    }
 	    always {
+    	    archiveArtifacts '**/outputs/apk/*.apk'
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'Gadgeothek/app/build/reports', reportFiles: 'lint-results.html', reportName: 'Lint Results', reportTitles: ''])
     	    cleanWs()
 	    }
 	}
