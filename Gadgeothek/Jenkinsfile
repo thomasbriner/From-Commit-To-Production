@@ -13,7 +13,7 @@ pipeline {
         stage('E2E Tests') {
             steps {
                 sh 'echo E2E Tests'
-            }
+             }
          }
     }
 }
