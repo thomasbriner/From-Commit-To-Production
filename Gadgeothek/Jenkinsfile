@@ -9,6 +9,7 @@ pipeline {
 			steps {
 				sh 'echo Build'
 				sh 'cd Gadgeothek; ./gradlew build'
+				sh 'cd Gadgeothek; ./gradlew lint'
 			}
 		}
 
@@ -25,9 +26,6 @@ pipeline {
 		}
 	}
 	post {
-	    always {
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'Gadgeothek/app/build/reports', reportFiles: 'lint-results.html', reportName: 'HTML Report', reportTitles: ''])
-	    }
 	    success {
     	    archiveArtifacts '**/outputs/apk/*.apk'
 	    }
