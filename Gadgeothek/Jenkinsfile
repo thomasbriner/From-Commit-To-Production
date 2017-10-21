@@ -27,7 +27,10 @@ pipeline {
 	}
 	post {
 	    success {
-    	    archiveArtifacts '**/outputs/apk/*.apk'
+    	    archiveArtifacts 'Gadgeothek/app/build/outputs/apk/*.apk'
+	    }
+	    always {
+    	    cleanWs()
 	    }
 	}
 }
