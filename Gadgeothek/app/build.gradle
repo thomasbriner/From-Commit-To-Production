@@ -68,9 +68,9 @@ dependencies {
 }
 
 teststore {
-    host '192.168.99.100'
+    host 'test-store.testing-knowhow.ch'
     port 8080
-    testSuite 'abd9b38c-98e4-4317-8682-55b57e8f426d'
+    testSuite '5066eb4b-6b0a-4fa0-bc5a-0e15b8d2980d'
     revision System.properties['revision']
     changesFile 'git.log'
     changesUrlTemplate 'https://github.com/ybonjour/test-store/commit/${revision}'
