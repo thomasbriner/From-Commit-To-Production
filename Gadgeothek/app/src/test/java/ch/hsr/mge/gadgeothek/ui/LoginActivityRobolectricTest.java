@@ -1,5 +1,6 @@
 package ch.hsr.mge.gadgeothek.ui;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
@@ -7,6 +8,7 @@ import org.robolectric.android.controller.ActivityController;
 
 public class LoginActivityRobolectricTest {
 
+    @Ignore
     @Test
     public void testV1() {
         LoginActivity activity = Robolectric.setupActivity(LoginActivity.class);
@@ -14,6 +16,7 @@ public class LoginActivityRobolectricTest {
 
     }
 
+    @Ignore
     @Test
     public void testV2() {
 
