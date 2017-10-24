@@ -33,7 +33,7 @@ public class LoginPresenterTest {
     @Test
     public void shouldNotLoginWithEmptyEmail() {
         presenter.startLogin(EMPTY, VALID_PASSWORD);
-        Mockito.verify(mockView, Mockito.never()).resetErrors();
+        Mockito.verify(mockView).resetErrors();
         Mockito.verify(mockView).addErrorForEmail();
         Mockito.verify(mockView, Mockito.never()).proceedWithLogin();
     }
