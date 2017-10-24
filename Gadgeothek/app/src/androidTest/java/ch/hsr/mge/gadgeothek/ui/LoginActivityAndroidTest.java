@@ -58,6 +58,8 @@ public class LoginActivityAndroidTest {
         Assert.assertTrue(LibraryService.isLoggedIn());
     }
 
+
+
    @Ignore
     @Test
     public void shouldBeLoggedInV3() throws Exception {
