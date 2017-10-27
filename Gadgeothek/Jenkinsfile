@@ -17,7 +17,7 @@ pipeline {
                  always {
                     junit allowEmptyResults: true, testResults: '**/build/test-results/testDemoDebugUnitTest/*.xml'
                     publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'Gadgeothek/app/build/reports', reportFiles: 'lint-results.html', reportName: 'Lint Results', reportTitles: ''])
-                    sh 'cd Gadgeothek; ./gradlew storeResults'
+                    sh 'cd Gadgeothek; revision="$(git rev-parse HEAD)"; ./gradlew storeResults'
                  }
              }
 		}
